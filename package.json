@@ -1,0 +1,20 @@
+{
+  "name": "game-leaderboard",
+  "version": "1.0.0",
+  "description": "A game leaderboard with redis + redis-server + nginx proxy for http api requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "nohup node index.js >> running.log 2>&1 & echo $! > running.pid",
+    "stop": "redis-cli -p 31001 save ; pkill -F running.pid >/dev/null 2>&1",
+    "restart": "redis-cli -p 31001 save ; pkill -F running.pid >/dev/null 2>&1 && nohup node index.js >> running.log 2>&1 & echo $! > running.pid",
+    "rsync": "rsync -rtvz --exclude-from=.gitignore ./ ex:/home/diti/api/"
+  },
+  "author": "a3diti",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "redis": "^2.8.0",
+    "redis-server": "^1.1.0"
+  }
+}

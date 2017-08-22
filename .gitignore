@@ -1,0 +1,5 @@
+redis-data-dir/
+node_modules/
+package-lock.json
+running.*
+*.log
