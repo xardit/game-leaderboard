@@ -1,6 +1,6 @@
 {
   "name": "game-leaderboard",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A game leaderboard with redis + redis-server + nginx proxy for http api requests",
   "author": "a3diti",
   "license": "MIT",
