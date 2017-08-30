@@ -2,6 +2,8 @@
   "name": "game-leaderboard",
   "version": "1.0.1",
   "description": "A game leaderboard with redis + redis-server + nginx proxy for http api requests",
+  "author": "a3diti",
+  "license": "MIT",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -17,8 +19,13 @@
     "restart": "redis-cli -p 31001 save ; pkill -F running.pid >/dev/null 2>&1 && nohup node index.js >> running.log 2>&1 & echo $! > running.pid",
     "rsync": "rsync -rtvz --exclude-from=.gitignore ./ ex:/home/diti/api/"
   },
-  "author": "a3diti",
-  "license": "MIT",
+  "keywords": [
+    "redis",
+    "leaderboard",
+    "game",
+    "nginx",
+    "api"
+  ],
   "dependencies": {
     "bluebird": "^3.5.0",
     "redis": "^2.8.0",
