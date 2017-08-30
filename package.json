@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "A game leaderboard with redis + redis-server + nginx proxy for http api requests",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a3diti/game-leaderboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/a3diti/game-leaderboard/issues"
+  },
   "scripts": {
     "test": "node index.js",
     "start": "nohup node index.js >> running.log 2>&1 & echo $! > running.pid",
