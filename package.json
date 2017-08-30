@@ -1,6 +1,6 @@
 {
   "name": "game-leaderboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A game leaderboard with redis + redis-server + nginx proxy for http api requests",
   "main": "index.js",
   "repository": {
