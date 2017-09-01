@@ -1,10 +1,10 @@
 
 console.log("# http-server starting...")
-const { leaderboard } = require('./game-leaderboard.js')
+const leaderboard = require('./game-leaderboard.js')
 
 const http = require('http')
 const url = require('url')
-const incoming_requests_port = 31002
+const config = require('./config.json')
 
 
 http.createServer(function (req, res) {
@@ -30,9 +30,9 @@ http.createServer(function (req, res) {
 	if(q.getLeaderboard) game.getLeaderboard().then(end)
 	if(q.getAllLeaderboards) game.getAllLeaderboards().then(end)
 
-}).listen(incoming_requests_port)
+}).listen(config.http_port)
 
-console.log("# http-server running at http://localhost:%s/", incoming_requests_port);
+console.log("# http-server running at http://localhost:%s/", config.http_port);
 
 
 

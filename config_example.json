@@ -1,0 +1,6 @@
+{
+	"app_user_auth": "0000000000000000000000000000000000000000000000000000000000000000",
+	"redis_port": 31001,
+	"http_port": 31002,
+	"slack_hook_url": "your_hook_url (readthis for setup https://www.smashingmagazine.com/2017/04/using-slack-monitor-app/)"
+}

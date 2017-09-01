@@ -1,7 +1,7 @@
 {
   "name": "game-leaderboard",
-  "version": "1.0.2",
-  "description": "A game leaderboard with redis + redis-server + nginx proxy for http api requests",
+  "version": "1.2.0",
+  "description": "A high-performance game leaderboard with redis + redis-server standalone + http api server used with nginx proxy + slack notifications",
   "author": "a3diti",
   "license": "MIT",
   "main": "index.js",
@@ -27,7 +27,9 @@
     "api"
   ],
   "dependencies": {
+    "async": "^2.5.0",
     "bluebird": "^3.5.0",
+    "node-slack": "0.0.7",
     "redis": "^2.8.0",
     "redis-server": "^1.1.0"
   }

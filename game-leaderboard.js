@@ -1,17 +1,17 @@
 
+const config = require('./config.json')
+const slack = require('./slack-notification')
 const bluebird = require("bluebird")
 const redis = require("redis")
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 const crypto = require('crypto')
 
-const redis_server_port = 31001
-
 class leaderboard {
 	constructor(queries){
 		this.queries = queries
 		console.log("# request queries:", JSON.stringify(queries))
-		this.db = redis.createClient(redis_server_port)
+		this.db = redis.createClient(config.redis_port)
 	}
 
 
@@ -204,14 +204,12 @@ class leaderboard {
 
 
 	authenticate(force_authentication = false){
-		const default_user_auth = '0000000000000000000000000000000000000000000000000000000000000000'
-
 		if(!this.validQuery('user_auth')) return Promise.resolve({"error":"authentication error :/"});
 
 		let user_auth = this.queries.user_auth.toLowerCase()
 
 		// check if default
-		if(!force_authentication && user_auth === default_user_auth){
+		if(!force_authentication && user_auth === config.app_user_auth){
 			return this.createUser()
 		}else{
 			// check if this user doesnt exists in database
@@ -233,14 +231,18 @@ class leaderboard {
 
 	createUser(){
 		let newAuth = this.genRandomSHA256('creating_new_user')
-		return this.db.hmsetAsync([
+		return this.db.multi()
+			.hmset([
 				"user:" + newAuth, // hash
 				"user_name", "anonymous",
 				"registered", new Date(),
 				"played_count", 0,
-			]).then(res => {
+			])
+			.dbsize()
+			.execAsync().then(res => {
 				this.user_auth = newAuth
 				this.db.save()
+				slack.notify(' dbsize is '+res[1])
 				return {registerAuth: newAuth}
 			});
 	}
@@ -251,46 +253,4 @@ class leaderboard {
 	}
 
 }
-exports.leaderboard = leaderboard
-
-
-/*
-
-
-
-# add scores to a table(autoranked by default from redis), names must be hashes
-ZADD leaderboard_30s 190 "Arditi"
-ZADD leaderboard_30s 21 "Polo"
-ZADD leaderboard_30s 230 "Deneres"
-ZADD leaderboard_30s 145 "Miza"
-ZADD leaderboard_30s 1450 "Dragon"
-
-# top 15
-ZREVRANGE leaderboard_30s 0 14 WITHSCORES
-
-# current user rank (starting from 0)
-ZREVRANK leaderboard_30s "Arditi"
-
-# multi get keys
-MGET key1 key2 nonexisting
-
-# set multiple fields
-HMSET user:1000 username antirez password P1pp0 age 34
-
-# change field
-HSET user:1000 password 12345
-
-# get field
-HGET user:1000 username
-
-# get all fields
-HGETALL user:1000
-
-# if user exists
-HEXISTS user:1000
-
-
-
-*/
-
-
+module.exports = leaderboard
