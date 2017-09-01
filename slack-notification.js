@@ -8,7 +8,7 @@ notify = (stats) => {
 	async.parallel([() => {
 		const slack = new Slack(config.slack_hook_url);
 		slack.send({
-		 text: ":rocket: New user registration!\nStatus: " + stats,
+		 text: ":rocket: " + stats,
 		 channel: '#game-stats',
 		 username: 'Crazy Particles Bot',
 		 icon_emoji: ":ghost:"
