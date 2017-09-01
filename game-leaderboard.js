@@ -1,6 +1,5 @@
 
 const config = require('./config.json')
-const slack = require('./slack-notification')
 const bluebird = require("bluebird")
 const redis = require("redis")
 bluebird.promisifyAll(redis.RedisClient.prototype);
@@ -231,18 +230,14 @@ class leaderboard {
 
 	createUser(){
 		let newAuth = this.genRandomSHA256('creating_new_user')
-		return this.db.multi()
-			.hmset([
+		return this.db.hmsetAsync([
 				"user:" + newAuth, // hash
 				"user_name", "anonymous",
 				"registered", new Date(),
 				"played_count", 0,
-			])
-			.dbsize()
-			.execAsync().then(res => {
+			]).then(res => {
 				this.user_auth = newAuth
 				this.db.save()
-				slack.notify(' dbsize is '+res[1])
 				return {registerAuth: newAuth}
 			});
 	}

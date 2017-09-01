@@ -1,3 +1,4 @@
+.git/
 redis-data-dir/
 node_modules/
 package-lock.json
@@ -6,4 +7,3 @@ running.*
 nginx.conf
 config.json
 notes.txt
-dump.rdb

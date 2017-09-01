@@ -35,5 +35,5 @@ http.createServer(function (req, res) {
 console.log("# http-server running at http://localhost:%s/", config.http_port);
 
 
-
-
+// slack notifications
+require('./slack-notification')
