@@ -3,3 +3,7 @@ node_modules/
 package-lock.json
 running.*
 *.log
+nginx.conf
+config.json
+notes.txt
+dump.rdb
