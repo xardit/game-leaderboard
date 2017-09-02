@@ -21,8 +21,8 @@ const redis = require("redis")
 const client = redis.createClient(config.redis_port)
 
 const schedule =  require('node-schedule')
-schedule.scheduleJob('0 15 * * *', () => {
-	client.dbsizeAsync().then((res) => {
-		notify(' dbsize is '+res[1])
+schedule.scheduleJob('0 16 * * *', () => {
+	client.dbsizeAsync().then(res => {
+		notify(' dbsize is '+res)
 	})
 })
